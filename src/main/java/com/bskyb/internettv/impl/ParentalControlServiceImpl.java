@@ -2,25 +2,23 @@ package com.bskyb.internettv.impl;
 
 import com.bskyb.internettv.parental_control_service.ParentalControlService;
 import com.bskyb.internettv.thirdparty.MovieService;
-import com.bskyb.internettv.thirdparty.MovieServiceImpl;
+import com.bskyb.internettv.thirdparty.MovieService;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ParentalControlServiceImpl implements ParentalControlService {
 
-    private MovieServiceImpl movieServiceImpl;
-    private CustomerServiceImpl customerServiceImpl;
+    private MovieService movieService;
 
     private static final List controlLevelList = Arrays.asList("U", "PG", "12", "15", "18");
 
-    public ParentalControlServiceImpl(MovieServiceImpl movieServiceImpl, CustomerServiceImpl customerServiceImpl) {
-        this.movieServiceImpl = movieServiceImpl;
-        this.customerServiceImpl=customerServiceImpl;
+    public ParentalControlServiceImpl(MovieService movieService) {
+        this.movieService = movieService;
     }
 
     public boolean canWatchMovie(String customerParentalControlLevel, String movieId) throws Exception {
-            String parentalControlLevel = movieServiceImpl.getParentalControlLevel(movieId);
+            String parentalControlLevel = movieService.getParentalControlLevel(movieId);
             return isCanWatchTheMovie(customerParentalControlLevel, parentalControlLevel);
     }
 
